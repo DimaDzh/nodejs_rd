@@ -1,0 +1,39 @@
+{
+  "habits": [
+    {
+      "id": 1,
+      "name": "Exercise",
+      "freq": "Daily",
+      "createdAt": "2023-10-01T12:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Read a book",
+      "freq": "Weekly",
+      "createdAt": "2023-10-02T12:00:00Z"
+    },
+    {
+      "id": 1750067876229,
+      "name": "Читати книжку",
+      "freq": "daily",
+      "createdAt": "2025-06-16",
+      "history": [
+        "2025-06-16"
+      ]
+    },
+    {
+      "id": 1750068150579,
+      "name": "Пити пиво",
+      "freq": "daily",
+      "createdAt": "2025-06-16",
+      "history": []
+    },
+    {
+      "id": 1750068346354,
+      "name": "Пити пиво after football",
+      "freq": "weekly",
+      "createdAt": "2025-06-16",
+      "done": false
+    }
+  ]
+}
