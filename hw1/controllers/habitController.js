@@ -1,10 +1,8 @@
-// controllers/habitController.js
 import {
   readDatabase,
   writeDatabase,
   generateId,
   getTodayDate,
-  getPastDates,
 } from "../models/habitModel.js";
 
 export async function addHabit(name, freq) {
@@ -76,25 +74,4 @@ export async function updateHabit(id, name, freq) {
   if (freq) habit.freq = freq;
   await writeDatabase(db);
   console.log(`Habit "${habit.name}" updated.`);
-}
-
-export async function showStats() {
-  const db = await readDatabase();
-  db.habits.forEach((habit) => {
-    const period =
-      habit.freq === "daily"
-        ? 7
-        : habit.freq === "weekly"
-        ? 30
-        : habit.freq === "monthly"
-        ? 30
-        : 7;
-
-    const pastDates = getPastDates(new Date(), period);
-    const count = pastDates.filter((d) => habit.history.includes(d)).length;
-    const percent = ((count / period) * 100).toFixed(1);
-    console.log(
-      `"${habit.name}" — ${percent}% completion over last ${period} days`
-    );
-  });
 }

@@ -1,4 +1,3 @@
-// router/index.js
 import {
   addHabit,
   listHabits,
@@ -16,7 +15,7 @@ function parseArgs(argsArray) {
     const arg = argsArray[i];
     if (arg.startsWith("--")) {
       key = arg.slice(2);
-      args[key] = true; // за замовчуванням true, якщо значення немає
+      args[key] = true;
     } else if (key) {
       args[key] = arg;
       key = null;
@@ -35,7 +34,7 @@ export async function handleCommand() {
     case "add":
       if (!args.name || !args.freq) {
         console.log(
-          '❌ Використання: add --name "<назва>" --freq <daily|weekly|monthly>'
+          'Використання: add --name "<назва>" --freq <daily|weekly|monthly>'
         );
         return;
       }
@@ -48,7 +47,7 @@ export async function handleCommand() {
 
     case "done":
       if (!args.id) {
-        console.log("❌ Використання: done --id <ідентифікатор>");
+        console.log("Використання: done --id <ідентифікатор>");
         return;
       }
       await markDone(args.id);
@@ -56,7 +55,7 @@ export async function handleCommand() {
 
     case "delete":
       if (!args.id) {
-        console.log("❌ Використання: delete --id <ідентифікатор>");
+        console.log("Використання: delete --id <ідентифікатор>");
         return;
       }
       await deleteHabit(args.id);
@@ -65,7 +64,7 @@ export async function handleCommand() {
     case "update":
       if (!args.id || (!args.name && !args.freq)) {
         console.log(
-          '❌ Використання: update --id <ідентифікатор> --name "<нове ім’я>" --freq <частота>'
+          'Використання: update --id <ідентифікатор> --name "<нове ім’я>" --freq <частота>'
         );
         return;
       }
@@ -77,6 +76,6 @@ export async function handleCommand() {
       break;
 
     default:
-      console.log("ℹ️ Команди: add, list, done, delete, update, stats");
+      console.log("Команди: add, list, done, delete, update, stats");
   }
 }
