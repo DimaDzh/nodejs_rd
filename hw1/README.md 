@@ -1,0 +1,10 @@
+ 1. Додати звичку (add)
+ node index.js add --name "Читати книжку" --freq daily
+ 2. Показати всі звички (list)
+ node index.js list
+3. Відмітити виконання звички (done)
+node index.js done --id 12345
+ 4. Видалити звичку (delete)
+ node index.js delete --id 12345
+5. Оновити звичку (update)
+node index.js update --id 12345 --name "Бігати зранку" --freq weekly
