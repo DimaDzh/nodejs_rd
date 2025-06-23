@@ -1,0 +1,29 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Alica Update",
+      "email": "alice@com.ua"
+    },
+    {
+      "id": 2,
+      "name": "Bob",
+      "email": "bob@com.ua"
+    },
+    {
+      "id": 3,
+      "name": "Charlie",
+      "email": "charlie@com.ua"
+    },
+    {
+      "id": 5,
+      "name": "Oleg",
+      "email": "oleg@com.ua"
+    },
+    {
+      "id": 7,
+      "name": "Inna",
+      "email": "inna@com.ua"
+    }
+  ]
+}
