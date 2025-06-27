@@ -1,39 +1,175 @@
-{
-  "habits": [
-    {
-      "id": 1,
-      "name": "Exercise",
-      "freq": "Daily",
-      "createdAt": "2023-10-01T12:00:00Z"
-    },
-    {
-      "id": 2,
-      "name": "Read a book",
-      "freq": "Weekly",
-      "createdAt": "2023-10-02T12:00:00Z"
-    },
-    {
-      "id": 1750067876229,
-      "name": "Читати книжку",
-      "freq": "daily",
-      "createdAt": "2025-06-16",
-      "history": [
-        "2025-06-16"
-      ]
-    },
-    {
-      "id": 1750068150579,
-      "name": "Пити пиво",
-      "freq": "daily",
-      "createdAt": "2025-06-16",
-      "history": []
-    },
-    {
-      "id": 1750068346354,
-      "name": "Пити пиво after football",
-      "freq": "weekly",
-      "createdAt": "2025-06-16",
-      "done": false
-    }
-  ]
-}
+[
+  {
+    "id": "1751045439475",
+    "name": "Just Learn TS",
+    "freq": "weekly",
+    "progress": [
+      {
+        "week": 1,
+        "done": true
+      },
+      {
+        "week": 2,
+        "done": true
+      },
+      {
+        "week": 3,
+        "done": true
+      },
+      {
+        "week": 4,
+        "done": false
+      }
+    ]
+  },
+  {
+    "id": "1751046600528",
+    "name": "Learn Express with TS",
+    "freq": "weekly",
+    "progress": [
+      {
+        "week": 1,
+        "done": false
+      },
+      {
+        "week": 2,
+        "done": false
+      },
+      {
+        "week": 3,
+        "done": false
+      },
+      {
+        "week": 4,
+        "done": false
+      }
+    ]
+  },
+  {
+    "id": "1751047493526",
+    "name": "Justthe Learn TS",
+    "freq": "daily",
+    "progress": [
+      {
+        "day": 1,
+        "done": true
+      },
+      {
+        "day": 2,
+        "done": true
+      },
+      {
+        "day": 3,
+        "done": true
+      },
+      {
+        "day": 4,
+        "done": true
+      },
+      {
+        "day": 5,
+        "done": false
+      },
+      {
+        "day": 6,
+        "done": false
+      },
+      {
+        "day": 7,
+        "done": false
+      },
+      {
+        "day": 8,
+        "done": false
+      },
+      {
+        "day": 9,
+        "done": false
+      },
+      {
+        "day": 10,
+        "done": false
+      },
+      {
+        "day": 11,
+        "done": false
+      },
+      {
+        "day": 12,
+        "done": false
+      },
+      {
+        "day": 13,
+        "done": false
+      },
+      {
+        "day": 14,
+        "done": false
+      },
+      {
+        "day": 15,
+        "done": false
+      },
+      {
+        "day": 16,
+        "done": false
+      },
+      {
+        "day": 17,
+        "done": false
+      },
+      {
+        "day": 18,
+        "done": false
+      },
+      {
+        "day": 19,
+        "done": false
+      },
+      {
+        "day": 20,
+        "done": false
+      },
+      {
+        "day": 21,
+        "done": false
+      },
+      {
+        "day": 22,
+        "done": false
+      },
+      {
+        "day": 23,
+        "done": false
+      },
+      {
+        "day": 24,
+        "done": false
+      },
+      {
+        "day": 25,
+        "done": false
+      },
+      {
+        "day": 26,
+        "done": false
+      },
+      {
+        "day": 27,
+        "done": false
+      },
+      {
+        "day": 28,
+        "done": false
+      },
+      {
+        "day": 29,
+        "done": false
+      },
+      {
+        "day": 30,
+        "done": false
+      }
+    ]
+  }
+]

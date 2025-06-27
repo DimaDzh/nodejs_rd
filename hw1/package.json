@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
@@ -13,8 +15,5 @@
     "@eslint/js": "^9.29.0",
     "eslint": "^9.29.0",
     "globals": "^16.2.0"
-  },
-  "dependencies": {
-    "dotenv": "^16.5.0"
   }
 }

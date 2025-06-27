@@ -1,3 +1,2 @@
-import { handleCommand } from "./routers/router.js";
-
-handleCommand();
+import { router } from "./router.js";
+router();
