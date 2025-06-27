@@ -37,3 +37,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"key":"test", "value":"Hel
 ```bash
 docker compose down -v
 ```
+
+## Тест з hotreload
+
+docker compose -f docker-compose.dev.yml up --build
