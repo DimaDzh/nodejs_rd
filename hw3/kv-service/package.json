@@ -1,0 +1,24 @@
+{
+  "name": "kv-service",
+  "version": "1.0.0",
+  "main": "/src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "build": "docker build -t redis-like:dev -f Dockerfile.dev .",
+    "docker-build": "docker build -t redis-like:dev .",
+    "docker-run": "docker run -p 3000:3000 redis-like:dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "eslint": "^9.29.0",
+    "globals": "^16.2.0"
+  }
+}
