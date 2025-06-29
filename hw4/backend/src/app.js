@@ -14,7 +14,7 @@ import { rateLimitMiddleware } from "./middlewares/rateLimitMiddleware.js";
 import { notFound } from "./middlewares/notFound.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { router as brewsRoute } from "./routes/brews.route.js";
-
+import { attachStaticHandler } from "./static/attach-static-handler.js";
 export function createApp() {
   const app = express();
 
@@ -57,6 +57,9 @@ export function createApp() {
   // Routing
 
   app.use("/api", brewsRoute);
+
+  // Static SPA
+  attachStaticHandler(app);
 
   // Swagger docs
   if (config.env === "development") {
