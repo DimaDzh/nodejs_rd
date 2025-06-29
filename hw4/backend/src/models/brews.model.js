@@ -18,7 +18,17 @@ export class BrewModel {
 
   create(dto) {
     const id = nanoid(8);
-    const brew = { id, ...dto };
+    const defaultAt = new Date().toISOString();
+
+    const brew = {
+      id,
+      beans: dto.beans,
+      method: dto.method,
+      rating: dto.rating || null,
+      notes: dto.notes || "",
+      brewedAt: dto.brewedAt ? dto.brewedAt : defaultAt,
+    };
+
     this.#store.set(id, brew);
     return brew;
   }

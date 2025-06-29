@@ -6,10 +6,7 @@ export const BrewsDTO = z.object({
   method: z.enum(["v60", "aeropress", "chemex", "espresso"]),
   rating: z.number().min(1).max(5).optional(),
   notes: z.string().max(200).optional(),
-  brewedAt: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/)
-    .optional(),
+  brewedAt: z.string().optional(),
 });
 /* реєструємо схему */
 registry.register("Brews", BrewsDTO);
