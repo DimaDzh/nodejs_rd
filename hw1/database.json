@@ -171,5 +171,189 @@
         "done": false
       }
     ]
+  },
+  {
+    "id": "1751215863832",
+    "name": "Learn G 2o",
+    "freq": "weekly",
+    "progress": [
+      {
+        "week": 1,
+        "done": false
+      },
+      {
+        "week": 2,
+        "done": false
+      },
+      {
+        "week": 3,
+        "done": false
+      },
+      {
+        "week": 4,
+        "done": false
+      }
+    ]
+  },
+  {
+    "id": "1751215883167",
+    "name": "Learn G 2o",
+    "freq": "weekly",
+    "progress": [
+      {
+        "week": 1,
+        "done": false
+      },
+      {
+        "week": 2,
+        "done": false
+      },
+      {
+        "week": 3,
+        "done": false
+      },
+      {
+        "week": 4,
+        "done": false
+      }
+    ]
+  },
+  {
+    "id": "1751215892762",
+    "name": "Learn G 2o",
+    "freq": "weekly",
+    "progress": [
+      {
+        "week": 1,
+        "done": false
+      },
+      {
+        "week": 2,
+        "done": false
+      },
+      {
+        "week": 3,
+        "done": false
+      },
+      {
+        "week": 4,
+        "done": false
+      }
+    ]
+  },
+  {
+    "id": "1751216097781",
+    "name": "Learn G 2o",
+    "freq": "weekly",
+    "progress": [
+      {
+        "week": 1,
+        "done": false
+      },
+      {
+        "week": 2,
+        "done": false
+      },
+      {
+        "week": 3,
+        "done": false
+      },
+      {
+        "week": 4,
+        "done": false
+      }
+    ]
+  },
+  {
+    "id": "1751216109515",
+    "name": "Learn G 2o",
+    "freq": "weekly",
+    "progress": [
+      {
+        "week": 1,
+        "done": false
+      },
+      {
+        "week": 2,
+        "done": false
+      },
+      {
+        "week": 3,
+        "done": false
+      },
+      {
+        "week": 4,
+        "done": false
+      }
+    ]
+  },
+  {
+    "id": "1751216215941",
+    "name": "Learn G 2o",
+    "freq": "weekly",
+    "progress": [
+      {
+        "week": 1,
+        "done": false
+      },
+      {
+        "week": 2,
+        "done": false
+      },
+      {
+        "week": 3,
+        "done": false
+      },
+      {
+        "week": 4,
+        "done": false
+      }
+    ]
+  },
+  {
+    "id": "1751216227903",
+    "name": "Learn G 2o",
+    "freq": "weekly",
+    "progress": [
+      {
+        "week": 1,
+        "done": false
+      },
+      {
+        "week": 2,
+        "done": false
+      },
+      {
+        "week": 3,
+        "done": false
+      },
+      {
+        "week": 4,
+        "done": false
+      }
+    ]
+  },
+  {
+    "id": "1751216244401",
+    "name": "Learn G 2o",
+    "freq": "weekly",
+    "progress": [
+      {
+        "week": 1,
+        "done": false
+      },
+      {
+        "week": 2,
+        "done": false
+      },
+      {
+        "week": 3,
+        "done": false
+      },
+      {
+        "week": 4,
+        "done": false
+      }
+    ]
   }
 ]

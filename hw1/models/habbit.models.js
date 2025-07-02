@@ -16,22 +16,7 @@ export async function getAll() {
 export async function create(payload) {
   const db = await read();
 
-  let progress = [];
-  if (payload.freq === "daily") {
-    progress = Array.from({ length: 30 }, (_, i) => ({
-      day: i + 1,
-      done: false,
-    }));
-  } else if (payload.freq === "weekly") {
-    progress = Array.from({ length: 4 }, (_, i) => ({
-      week: i + 1,
-      done: false,
-    }));
-  } else if (payload.freq === "monthly") {
-    progress = [{ month: 1, done: false }];
-  }
-
-  const habbit = { id: Date.now().toString(), ...payload, progress };
+  const habbit = { id: Date.now().toString(), ...payload };
   await save([...db, habbit]);
   return habbit;
 }
@@ -48,47 +33,29 @@ export async function updateProgressById(id, payload) {
   const habbit = db[idx];
 
   if (habbit.freq === "daily") {
-    const day = payload.day;
-    if (day < 1 || day > 30) {
-      console.log("Invalid day for daily habit:", day);
-      return null;
+    const today = new Date().getDate();
+    const progressIdx = habbit.progress.findIndex((p) => p.day === today);
+    if (progressIdx !== -1) {
+      habbit.progress[progressIdx].done = true;
     }
-
-    // Update progress where day matches
-    const progress = habbit.progress.map((p) =>
-      p.day == day ? { ...p, done: true } : p
+  } else if (habbit.freq === "weekly") {
+    const currentWeek = Math.ceil(new Date().getDate() / 7);
+    const progressIdx = habbit.progress.findIndex(
+      (p) => p.week === currentWeek
     );
-
-    db[idx] = { ...habbit, progress };
-    await save(db);
-    console.log(`Habit with id ${id} updated successfully.`);
-    return db[idx];
-  }
-  if (habbit.freq === "weekly") {
-    const week = payload.week;
-    if (week < 1 || week > 4) {
-      console.log("Invalid week for weekly habit:", week);
-      return null;
+    if (progressIdx !== -1) {
+      habbit.progress[progressIdx].done = true;
     }
-
-    // Update progress where week matches
-    const progress = habbit.progress.map((p) =>
-      p.week == week ? { ...p, done: true } : p
-    );
-
-    db[idx] = { ...habbit, progress };
-    await save(db);
-    console.log(`Habit with id ${id} updated successfully.`);
-    return db[idx];
-  }
-  if (habbit.freq === "monthly") {
-    // Monthly habits are not updated by day or week, just mark as done
-    db[idx] = { ...habbit, done: true };
-    await save(db);
-    console.log(`Habit with id ${id} updated successfully.`);
-    return db[idx];
+  } else if (habbit.freq === "monthly") {
+    if (habbit.progress.length > 0) {
+      habbit.progress[0].done = true;
+    }
   }
 
+  db[idx] = habbit;
+  await save(db);
+
+  console.log(`Progress for habit with id ${id} updated successfully.`);
   return habbit;
 }
 
