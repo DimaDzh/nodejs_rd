@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Green Tea 1",
+    "origin": "China",
+    "rating": 9,
+    "brewTemp": 85,
+    "notes": "Best served plain"
+  },
+  {
+    "name": "Black Tea 2",
+    "origin": "India",
+    "rating": 8,
+    "brewTemp": 90,
+    "notes": "Add lemon for flavor"
+  },
+  {
+    "name": "Oolong Tea 3",
+    "origin": "Taiwan",
+    "rating": 7,
+    "brewTemp": 80,
+    "notes": "Drink with honey"
+  },
+  {
+    "name": "White Tea 4",
+    "origin": "Sri Lanka",
+    "rating": 10,
+    "brewTemp": 75,
+    "notes": "Delicate flavor"
+  },
+  {
+    "name": "Herbal Tea 5",
+    "origin": "Morocco",
+    "rating": 6,
+    "brewTemp": 95,
+    "notes": "Minty and refreshing"
+  },
+  {
+    "name": "Matcha Tea 6",
+    "origin": "Japan",
+    "rating": 9,
+    "brewTemp": 70,
+    "notes": "Rich and creamy"
+  },
+  {
+    "name": "Chai Tea 7",
+    "origin": "India",
+    "rating": 8,
+    "brewTemp": 100,
+    "notes": "Spicy and aromatic"
+  },
+  {
+    "name": "Pu-erh Tea 8",
+    "origin": "China",
+    "rating": 7,
+    "brewTemp": 95,
+    "notes": "Earthy flavor"
+  },
+  {
+    "name": "Rooibos Tea 9",
+    "origin": "South Africa",
+    "rating": 8,
+    "brewTemp": 90,
+    "notes": "Naturally sweet"
+  },
+  {
+    "name": "Yellow Tea 10",
+    "origin": "China",
+    "rating": 10,
+    "brewTemp": 85,
+    "notes": "Rare and smooth"
+  }
+]
