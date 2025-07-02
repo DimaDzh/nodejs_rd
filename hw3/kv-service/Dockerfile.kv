@@ -1,5 +1,15 @@
+# Stage 1: Builder
+FROM node:18-alpine AS builder
+WORKDIR /usr/src/app
+COPY package.json package-lock.json ./
+RUN npm install
+COPY src ./src
+
+# Stage 2: Runtime
 FROM node:18-alpine
 WORKDIR /usr/src/app
-COPY src ./src
+COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app/src ./src
+COPY package.json ./
 EXPOSE 3000
-CMD ["node","src/index.js"]
+CMD ["node", "src/index.js"]
