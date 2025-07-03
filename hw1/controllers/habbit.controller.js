@@ -10,8 +10,12 @@ import {
 export async function handleRoute(req) {
   try {
     if (req.method === "list") {
-      const resp = await list();
-      console.log("Habbit List:", resp);
+      try {
+        const resp = await list();
+        console.table(resp);
+      } catch (error) {
+        console.error("Failed to fetch the habit list:", error);
+      }
     }
     if (req.method === "add") {
       const resp = await add(req.body);
@@ -25,8 +29,8 @@ export async function handleRoute(req) {
         console.log("Habbit not found");
       }
     }
-    if (req.method === "done" && req.body && req.body.id) {
-      return await updateProgressById(req.body.id, req.body);
+    if (req.method === "done" && req.body.id) {
+      return await updateProgressById(req.body.id);
     }
     if (req.method === "update" && req.body && req.body.id) {
       return await updateById(req.body.id, req.body);

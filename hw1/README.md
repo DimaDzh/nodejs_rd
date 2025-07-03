@@ -12,9 +12,7 @@ node index.js delete --id 1751048550730
 
 ## change habbit progress
 
-# --day or -- week or --month number
-
-node index.js done --id 1751045439475 --week 3
+node index.js done --id 1751045439475
 
 ## update habbit data
 

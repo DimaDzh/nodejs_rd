@@ -31,32 +31,16 @@ export async function updateProgressById(id, payload) {
   }
 
   const habbit = db[idx];
+  const updatedProgress = habbit.progress.map((p) =>
+    p.item === parseInt(payload.item, 10) ? { ...p, done: payload.done } : p
+  );
 
-  if (habbit.freq === "daily") {
-    const today = new Date().getDate();
-    const progressIdx = habbit.progress.findIndex((p) => p.day === today);
-    if (progressIdx !== -1) {
-      habbit.progress[progressIdx].done = true;
-    }
-  } else if (habbit.freq === "weekly") {
-    const currentWeek = Math.ceil(new Date().getDate() / 7);
-    const progressIdx = habbit.progress.findIndex(
-      (p) => p.week === currentWeek
-    );
-    if (progressIdx !== -1) {
-      habbit.progress[progressIdx].done = true;
-    }
-  } else if (habbit.freq === "monthly") {
-    if (habbit.progress.length > 0) {
-      habbit.progress[0].done = true;
-    }
-  }
-
-  db[idx] = habbit;
+  const updatedHabbit = { ...habbit, progress: updatedProgress };
+  db[idx] = updatedHabbit;
   await save(db);
 
   console.log(`Progress for habit with id ${id} updated successfully.`);
-  return habbit;
+  return updatedHabbit;
 }
 
 export async function updateById(id, payload) {
@@ -70,35 +54,11 @@ export async function updateById(id, payload) {
 
   const habbit = db[idx];
 
-  let updatedHabbit = {
-    ...habbit,
-    ...(payload.name && { name: payload.name }),
-    ...(payload.freq && { freq: payload.freq }),
-  };
-
-  if (payload.freq && payload.freq != habbit.freq) {
-    let progress = [];
-    if (payload.freq === "daily") {
-      progress = Array.from({ length: 30 }, (_, i) => ({
-        day: i + 1,
-        done: false,
-      }));
-    } else if (payload.freq === "weekly") {
-      progress = Array.from({ length: 4 }, (_, i) => ({
-        week: i + 1,
-        done: false,
-      }));
-    } else if (payload.freq === "monthly") {
-      progress = [{ month: 1, done: false }];
-    }
-    updatedHabbit = { ...updatedHabbit, progress };
-  }
-
-  db[idx] = updatedHabbit;
+  db[idx] = payload;
   await save(db);
 
   console.log(`Habit with id ${id} updated successfully.`);
-  return updatedHabbit;
+  return habbit;
 }
 
 export async function remove(id) {
