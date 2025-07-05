@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 
 const databasePath = "./database.json";
 
@@ -11,10 +11,9 @@ export function readDatabase() {
   }
 }
 
-export function writeDatabase(data: any) {
+export function writeDatabase(data) {
   try {
-    const fs = require("fs");
-    fs.writeFileSync(databasePath, JSON.stringify(data, null, 2));
+    writeFileSync(databasePath, JSON.stringify(data, null, 2));
   } catch (err) {
     console.error("Error writing file:", err);
   }
