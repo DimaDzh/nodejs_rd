@@ -1,150 +1,93 @@
 [
   {
-    "id": "175155595517211",
-    "name": "Learn Express with TS",
+    "id": "1752484773767",
+    "name": "LS",
     "freq": "weekly",
     "progress": [
       {
+        "timestamp": 1752440400000,
+        "date": "2025-07-13",
         "week": 1,
-        "done": false
+        "done": true
       },
       {
+        "timestamp": 1753045200000,
+        "date": "2025-07-20",
         "week": 2,
         "done": false
       },
       {
+        "timestamp": 1753650000000,
+        "date": "2025-07-27",
         "week": 3,
         "done": false
       },
       {
+        "timestamp": 1754254800000,
+        "date": "2025-08-03",
         "week": 4,
         "done": false
       }
     ]
   },
   {
-    "id": "1751555955171",
-    "name": "Learn TS",
-    "freq": "daily",
+    "id": "1752486230786",
+    "name": "Learn New JS",
+    "freq": "weekly",
     "progress": [
       {
-        "item": 1,
-        "done": true
-      },
-      {
-        "item": 2,
+        "timestamp": 1752440400000,
+        "date": "2025-07-13",
+        "week": 1,
         "done": false
       },
       {
-        "item": 3,
+        "timestamp": 1753045200000,
+        "date": "2025-07-20",
+        "week": 2,
         "done": false
       },
       {
-        "item": 4,
+        "timestamp": 1753650000000,
+        "date": "2025-07-27",
+        "week": 3,
         "done": false
       },
       {
-        "item": 5,
+        "timestamp": 1754254800000,
+        "date": "2025-08-03",
+        "week": 4,
+        "done": false
+      }
+    ]
+  },
+  {
+    "id": "1752486249171",
+    "name": "Learn New JS 2",
+    "freq": "weekly",
+    "progress": [
+      {
+        "timestamp": 1752440400000,
+        "date": "2025-07-13",
+        "week": 1,
         "done": false
       },
       {
-        "item": 6,
+        "timestamp": 1753045200000,
+        "date": "2025-07-20",
+        "week": 2,
         "done": false
       },
       {
-        "item": 7,
+        "timestamp": 1753650000000,
+        "date": "2025-07-27",
+        "week": 3,
         "done": false
       },
       {
-        "item": 8,
-        "done": false
-      },
-      {
-        "item": 9,
-        "done": false
-      },
-      {
-        "item": 10,
-        "done": false
-      },
-      {
-        "item": 11,
-        "done": false
-      },
-      {
-        "item": 12,
-        "done": false
-      },
-      {
-        "item": 13,
-        "done": false
-      },
-      {
-        "item": 14,
-        "done": false
-      },
-      {
-        "item": 15,
-        "done": false
-      },
-      {
-        "item": 16,
-        "done": false
-      },
-      {
-        "item": 17,
-        "done": false
-      },
-      {
-        "item": 18,
-        "done": false
-      },
-      {
-        "item": 19,
-        "done": false
-      },
-      {
-        "item": 20,
-        "done": false
-      },
-      {
-        "item": 21,
-        "done": true
-      },
-      {
-        "item": 22,
-        "done": false
-      },
-      {
-        "item": 23,
-        "done": false
-      },
-      {
-        "item": 24,
-        "done": false
-      },
-      {
-        "item": 25,
-        "done": false
-      },
-      {
-        "item": 26,
-        "done": false
-      },
-      {
-        "item": 27,
-        "done": false
-      },
-      {
-        "item": 28,
-        "done": false
-      },
-      {
-        "item": 29,
-        "done": false
-      },
-      {
-        "item": 30,
+        "timestamp": 1754254800000,
+        "date": "2025-08-03",
+        "week": 4,
         "done": false
       }
     ]
