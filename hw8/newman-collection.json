@@ -1,0 +1,169 @@
+{
+  "info": {
+    "name": "Mini Zipper API Test",
+    "description": "Testing mini-zipper with multiple ZIP files from test-files folder",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Upload large_test_images_with_broken.zip",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Response status is 201', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test('Response has required fields', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('processed');",
+              "    pm.expect(jsonData).to.have.property('skipped');",
+              "    pm.expect(jsonData).to.have.property('durationMs');",
+              "});",
+              "",
+              "pm.test('Response time is acceptable', function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(60000);",
+              "});",
+              "",
+              "const jsonData = pm.response.json();",
+              "console.log(`large_test_images_with_broken.zip - Request ${pm.info.iteration + 1}:`);",
+              "console.log(`  Processed: ${jsonData.processed}`);",
+              "console.log(`  Skipped: ${jsonData.skipped}`);",
+              "console.log(`  Duration: ${jsonData.durationMs}ms`);",
+              "console.log(`  Response Time: ${pm.response.responseTime}ms`);",
+              "console.log('---');"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": "test-files/large_test_images_with_broken.zip"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:3000/zip",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["zip"]
+        }
+      }
+    },
+    {
+      "name": "Upload number_images.zip",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Response status is 201', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test('Response has required fields', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('processed');",
+              "    pm.expect(jsonData).to.have.property('skipped');",
+              "    pm.expect(jsonData).to.have.property('durationMs');",
+              "});",
+              "",
+              "const jsonData = pm.response.json();",
+              "console.log(`number_images.zip - Request ${pm.info.iteration + 1}:`);",
+              "console.log(`  Processed: ${jsonData.processed}`);",
+              "console.log(`  Skipped: ${jsonData.skipped}`);",
+              "console.log(`  Duration: ${jsonData.durationMs}ms`);",
+              "console.log(`  Response Time: ${pm.response.responseTime}ms`);",
+              "console.log('---');"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": "test-files/number_images.zip"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:3000/zip",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["zip"]
+        }
+      }
+    },
+    {
+      "name": "Upload test_images_with_broken.zip",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Response status is 201', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test('Response has required fields', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('processed');",
+              "    pm.expect(jsonData).to.have.property('skipped');",
+              "    pm.expect(jsonData).to.have.property('durationMs');",
+              "});",
+              "",
+              "const jsonData = pm.response.json();",
+              "console.log(`test_images_with_broken.zip - Request ${pm.info.iteration + 1}:`);",
+              "console.log(`  Processed: ${jsonData.processed}`);",
+              "console.log(`  Skipped: ${jsonData.skipped}`);",
+              "console.log(`  Duration: ${jsonData.durationMs}ms`);",
+              "console.log(`  Response Time: ${pm.response.responseTime}ms`);",
+              "console.log('---');"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": "test-files/test_images_with_broken.zip"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:3000/zip",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["zip"]
+        }
+      }
+    }
+  ]
+}
