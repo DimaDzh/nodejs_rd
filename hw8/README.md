@@ -26,3 +26,12 @@ newman run newman-collection.json
 ```bash
 newman run newman-collection.json -n 3
 ```
+
+### 3. Test with test_images_with_broken.zip:
+
+```bash
+curl -X POST \
+  http://localhost:3000/process-zip \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@test-files/test_images_with_broken.zip"
+```
