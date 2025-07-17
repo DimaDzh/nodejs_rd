@@ -5,7 +5,7 @@
 1. Make sure your NestJS server is running:
 
    ```bash
-   cd mini-zipper && npm run start
+   cd mini-zipper && pnpm start:dev
    ```
 
 2. ZIP files are located in test-files directory:
