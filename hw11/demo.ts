@@ -4,7 +4,7 @@ import { pool } from "./src/database/pool.provider";
 async function runDemo() {
   try {
     //1.Find by age
-    const users = await userRepository.findUsers({ age: 28 });
+    const users = await userRepository.findUsers({ age: 33 });
     console.log("Found users by age:", users);
     // 2. Find one user by ID
     const user = await userRepository.findOneUser(10);
@@ -13,7 +13,7 @@ async function runDemo() {
     const newUser = await userRepository.createUser({
       name: "Villy Vonka",
       email: "chocalate@gmail.com",
-      age: 25,
+      age: 33,
     });
     console.log("Created user:", newUser);
     if (!newUser) {
