@@ -52,6 +52,22 @@ export class ChatGateway
       .subscribe((event) => {
         this.server.to(`chat:${event.data.chatId}`).emit("typing", event.data);
       });
+
+    this.sub.subscribe("chat-events");
+    this.sub.on("message", (channel: string, message: string) => {
+      if (channel === "chat-events") {
+        try {
+          const event = JSON.parse(message);
+          if (event.ev === "chatCreated") {
+            this.broadcastChatCreated(event.data);
+          } else if (event.ev === "membersUpdated") {
+            this.broadcastMembersUpdated(event.data.chatId, event.data.members);
+          }
+        } catch (error) {
+          console.error("Error parsing chat event:", error);
+        }
+      }
+    });
   }
 
   onModuleDestroy() {

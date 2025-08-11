@@ -90,6 +90,15 @@ export class ChatsService implements OnModuleInit {
       await this.redis.sadd(`user:${member}:chats`, chatId);
     }
 
+    await this.redis.publish(
+      "chat-events",
+      JSON.stringify({
+        ev: "chatCreated",
+        data: chat,
+        src: "service",
+      })
+    );
+
     return chat;
   }
 
