@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { z } from "zod";
 import { makeClassInvoker } from "awilix-express";
-
 import { BrewsController } from "../controllers/brews.controller.js";
 import { BrewsDTO } from "../dto/brews.dto.js";
 import { asyncHandler } from "../middlewares/asyncHandler.js";
 import { registry } from "../openapi/registry.js";
 import { validate } from "../middlewares/validate.js";
 import { validateParams } from "../middlewares/validateParams.js";
+import { validateQuery } from "../middlewares/validateQuery.js";
 
 const router = Router();
 const ctl = makeClassInvoker(BrewsController);
@@ -16,17 +16,34 @@ const paramsSchema = z.object({
   id: z.string().describe("Coffee ID"),
 });
 
+const querySchema = z.object({
+  method: z
+    .enum(["v60", "aeropress", "chemex", "espresso"])
+    .optional()
+    .describe("Filter by brewing method"),
+  ratingMin: z
+    .string()
+    .transform((val) => parseFloat(val))
+    .pipe(z.number().min(1).max(5))
+    .optional()
+    .describe("Filter by minimum rating"),
+});
+
 //Get all
-router.get("/brews", ctl("index"));
+router.get("/brews", validateQuery(querySchema), asyncHandler(ctl("index")));
 registry.registerPath({
   method: "get",
   path: "/api/brews",
   tags: ["Brews"],
+  request: {
+    query: querySchema,
+  },
   responses: {
     200: {
       description: "Array of brews",
       content: { "application/json": { schema: z.array(BrewsDTO) } },
     },
+    404: { description: "Brews not found" },
   },
 });
 

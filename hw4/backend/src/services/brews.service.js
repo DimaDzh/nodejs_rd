@@ -5,8 +5,20 @@ export class BrewsService {
     this.brewsModel = brewsModel;
   }
 
-  getAll() {
-    return this.brewsModel.all();
+  getAll(filters = {}) {
+    let brews = this.brewsModel.all();
+
+    if (filters.method) {
+      brews = brews.filter((brew) => brew.method === filters.method);
+    }
+
+    if (filters.ratingMin !== undefined) {
+      brews = brews.filter(
+        (brew) => brew.rating && brew.rating >= filters.ratingMin
+      );
+    }
+
+    return brews;
   }
 
   getOne(id) {

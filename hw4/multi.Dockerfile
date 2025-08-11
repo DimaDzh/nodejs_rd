@@ -22,23 +22,23 @@ COPY --from=deps /workspace/frontend/node_modules ./node_modules
 COPY frontend/ .
 RUN npm run build             # vite → dist/
 
-################# 3. backend prune (залишаємо prod-deps) ##############
+################# 3. backend build #####################################
 FROM node:20-alpine AS backend
 WORKDIR /workspace/backend
 
 COPY --from=deps /workspace/backend/node_modules ./node_modules
 COPY backend/ .
-RUN npm prune --omit=dev        # тільки тут випиляємо dev-deps
+RUN npm run build               # збираємо backend в dist/
 
 ################# 4. runtime (tiny) ###################################
 FROM alpine:3.19
 RUN apk add --no-cache nodejs tini
 WORKDIR /app
 
-COPY --from=backend   /workspace/backend            ./
-COPY --from=frontend  /workspace/frontend/dist      ./build
+COPY --from=backend   /workspace/backend/dist          ./
+COPY --from=frontend  /workspace/frontend/dist         ./build
 
 ENV NODE_ENV=production
 EXPOSE 3000
 ENTRYPOINT ["/sbin/tini","--"]
-CMD ["node","src/server.js"]
+CMD ["node","server.mjs"]
