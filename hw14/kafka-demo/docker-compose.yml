@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   zookeeper:
@@ -22,3 +22,15 @@ services:
       KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: "true"
     depends_on:
       - zookeeper
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:
