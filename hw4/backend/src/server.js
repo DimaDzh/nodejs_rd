@@ -3,6 +3,7 @@ import process from "node:process";
 import { createApp } from "./app.js";
 import { makeUpperCase } from "./utils/make-capital.js";
 import { config } from "./config/index.js";
+import { container } from "./container.js";
 
 const app = createApp();
 const server = http.createServer(app);
@@ -19,6 +20,7 @@ function shutDown() {
   console.log("🔄  Shutting down gracefully...");
   server.close(() => {
     console.log("✅  Closed out remaining connections");
+    container.dispose();
     process.exit(0);
   });
   // Якщо через 10 сек не закрився — kill
