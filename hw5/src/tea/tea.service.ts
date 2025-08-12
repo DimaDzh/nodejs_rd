@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { Tea } from "./entities/tea.entity";
 import {
   TeaSchema,
@@ -44,7 +44,7 @@ export class TeaService {
   findOne(id: number): Tea {
     const tea = this.teas.find((tea) => Number(tea.id) === Number(id));
     if (!tea) {
-      throw new Error(`Tea with ID ${id} not found`);
+      throw new NotFoundException(`Tea with ID ${id} not found`);
     }
     return tea;
   }
@@ -57,12 +57,8 @@ export class TeaService {
     return tea;
   }
 
-  update(id: number, dto: UpdateTeaDto): Tea | undefined {
+  update(id: number, dto: UpdateTeaDto): Tea {
     const tea = this.findOne(id);
-    if (!tea) {
-      throw new Error(`Tea with ID ${id} not found`);
-    }
-
     const parsedDto = UpdateTeaSchema.parse(dto);
 
     Object.assign(tea, parsedDto);
@@ -70,6 +66,8 @@ export class TeaService {
   }
 
   remove(id: number) {
-    this.teas = this.teas.filter((u) => u.id !== id);
+    const tea = this.findOne(id);
+    this.teas = this.teas.filter((tea) => tea.id !== id);
+    return tea;
   }
 }

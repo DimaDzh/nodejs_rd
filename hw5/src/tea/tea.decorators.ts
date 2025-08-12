@@ -12,7 +12,7 @@ export const ZBody = (schema: ZodSchema) => {
 
     try {
       return await schema.parseAsync(body);
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestException(error.errors || "Invalid request body");
     }
   })();

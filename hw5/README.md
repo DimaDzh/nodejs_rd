@@ -1,3 +1,15 @@
+# Build
+
+docker build -t tea-tracker .
+
+# Run
+
+docker run -p 3000:3000 tea-tracker
+
+# Docker-compose
+
+docker-compose up --build
+
 ## Post one tea - POST
 
 http://localhost:3030/tea

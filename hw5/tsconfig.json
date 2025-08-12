@@ -12,6 +12,10 @@
     "rootDir": "./",
     "baseUrl": "./",
     "skipLibCheck": true,
-    "incremental": true
+    "incremental": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictPropertyInitialization": true,
+    "strictNullChecks": true
   }
 }
