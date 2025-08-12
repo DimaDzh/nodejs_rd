@@ -18,9 +18,9 @@ import {
 } from "@nestjs/swagger";
 import { Throttle } from "@nestjs/throttler";
 import {
-  CreateTeaDtoSwagger,
-  TeaResponseSwagger,
-  UpdateTeaDtoSwagger,
+  CreateTeaDto as CreateTeaDtoSwagger,
+  UpdateTeaDto as UpdateTeaDtoSwagger,
+  TeaResponse as TeaResponseSwagger,
 } from "../shared/dto/swagger.dto";
 
 import { TeaService } from "./tea.service";

@@ -29,10 +29,19 @@ WORKDIR /app
 # Install wget for healthcheck
 RUN apk add --no-cache wget
 
-# Copy built application and production dependencies
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules ./node_modules
+# Copy package files
 COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/pnpm-lock.yaml* ./
+
+# Install only production dependencies
+RUN if [ -f pnpm-lock.yaml ]; then \
+      npm install -g pnpm && pnpm install --frozen-lockfile --prod; \
+    else \
+      npm ci --only=production --silent; \
+    fi
+
+# Copy built application
+COPY --from=builder /app/dist ./dist
 
 # Expose port
 EXPOSE 3000

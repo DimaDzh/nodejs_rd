@@ -27,17 +27,7 @@ async function bootstrap() {
   /* Swagger */
   const swaggerCfg = new DocumentBuilder()
     .setTitle("Nest Tea Lovers")
-    .setDescription(
-      `Tea‑Tracker API with Rate Limiting
-    
-Rate limiting is applied to all endpoints:
-- General endpoints: 10 requests per minute
-- Create operations: 5 requests per minute  
-- Update operations: 5 requests per minute
-- Delete operations: 3 requests per minute
-
-When rate limit is exceeded, you'll receive a 429 status code.`
-    )
+    .setDescription(`Tea‑Tracker API with Rate Limiting`)
     .setVersion("1.1")
     .addApiKey(
       {

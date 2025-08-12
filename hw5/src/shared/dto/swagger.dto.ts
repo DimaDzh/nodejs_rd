@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
-export class CreateTeaDtoSwagger {
+export class CreateTeaDto {
   @ApiProperty({
     description: "Tea name",
     minLength: 3,
@@ -41,7 +41,7 @@ export class CreateTeaDtoSwagger {
   notes?: string;
 }
 
-export class UpdateTeaDtoSwagger {
+export class UpdateTeaDto {
   @ApiPropertyOptional({
     description: "Tea name",
     minLength: 3,
@@ -82,7 +82,7 @@ export class UpdateTeaDtoSwagger {
   notes?: string;
 }
 
-export class TeaResponseSwagger {
+export class TeaResponse {
   @ApiProperty({
     description: "Tea ID",
     example: 1647891234567,
@@ -120,12 +120,12 @@ export class TeaResponseSwagger {
   notes?: string;
 }
 
-export class TeaListResponseSwagger {
+export class TeaListResponse {
   @ApiProperty({
     description: "Array of tea items",
-    type: [TeaResponseSwagger],
+    type: [TeaResponse],
   })
-  data!: TeaResponseSwagger[];
+  data!: TeaResponse[];
 
   @ApiProperty({
     description: "Total number of items",
