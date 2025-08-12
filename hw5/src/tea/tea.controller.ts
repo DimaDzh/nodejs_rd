@@ -16,6 +16,7 @@ import {
   ApiOperation,
   ApiBody,
 } from "@nestjs/swagger";
+import { Throttle } from "@nestjs/throttler";
 import {
   CreateTeaDtoSwagger,
   TeaResponseSwagger,
@@ -45,6 +46,11 @@ export class TeaController {
     description: "List of teas with pagination",
     type: TeaResponseSwagger,
   })
+  @ApiResponse({
+    status: 429,
+    description:
+      "Too Many Requests - Rate limit exceeded (max 10 requests per minute)",
+  })
   @ApiQuery({
     name: "minRating",
     required: false,
@@ -61,10 +67,10 @@ export class TeaController {
     type: "number",
   })
   findAll(
-    @Query("minRating", new ParseIntPipe({ optional: true }))
+    @Query("minRating")
     minRating?: number,
-    @Query("page", new ParseIntPipe({ optional: true })) page?: number,
-    @Query("pageSize", new ParseIntPipe({ optional: true })) pageSize?: number
+    @Query("page") page?: number,
+    @Query("pageSize") pageSize?: number
   ) {
     return this.tea.findAll(minRating, page, pageSize);
   }
@@ -81,11 +87,17 @@ export class TeaController {
     status: 404,
     description: "Tea not found",
   })
+  @ApiResponse({
+    status: 429,
+    description:
+      "Too Many Requests - Rate limit exceeded (max 10 requests per minute)",
+  })
   findOne(@Param("id", ParseIntPipe) id: number) {
     return this.tea.findOne(id);
   }
 
   @Post()
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   @ApiSecurity("x-api-key")
   @ApiOperation({ summary: "Create new tea" })
   @ApiBody({ type: CreateTeaDtoSwagger })
@@ -102,11 +114,17 @@ export class TeaController {
     status: 401,
     description: "Unauthorized - API key required",
   })
+  @ApiResponse({
+    status: 429,
+    description:
+      "Too Many Requests - Rate limit exceeded (max 5 requests per minute for create operations)",
+  })
   create(@ZBody(TeaSchema) dto: CreateTeaDto) {
     return this.tea.create(dto);
   }
 
   @Put(":id")
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   @ApiSecurity("x-api-key")
   @ApiOperation({ summary: "Update tea by ID" })
   @ApiBody({ type: UpdateTeaDtoSwagger })
@@ -127,6 +145,11 @@ export class TeaController {
     status: 401,
     description: "Unauthorized - API key required",
   })
+  @ApiResponse({
+    status: 429,
+    description:
+      "Too Many Requests - Rate limit exceeded (max 5 requests per minute for update operations)",
+  })
   update(
     @Param("id", ParseIntPipe) id: number,
     @ZBody(UpdateTeaSchema) dto: UpdateTeaDto
@@ -135,6 +158,7 @@ export class TeaController {
   }
 
   @Delete(":id")
+  @Throttle({ default: { limit: 3, ttl: 60000 } })
   @ApiSecurity("x-api-key")
   @ApiOperation({ summary: "Delete tea by ID" })
   @ApiResponse({
@@ -154,6 +178,11 @@ export class TeaController {
   @ApiResponse({
     status: 401,
     description: "Unauthorized - API key required",
+  })
+  @ApiResponse({
+    status: 429,
+    description:
+      "Too Many Requests - Rate limit exceeded (max 3 requests per minute for delete operations)",
   })
   remove(@Param("id", ParseIntPipe) id: number) {
     this.tea.remove(id);
