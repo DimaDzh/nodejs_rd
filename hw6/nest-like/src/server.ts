@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { Factory } from "./core/http";
-import { CoursesModule } from "./apps/courses/books.module";
+import { CoursesModule } from "./apps/courses/courses.module";
 
 process.on("uncaughtException", (err) => {
   console.error("Uncaught Exception:", err);

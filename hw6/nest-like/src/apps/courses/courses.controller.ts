@@ -12,9 +12,12 @@ import { CoursesService } from "./courses.service";
 import { coursesSchema } from "./courses.schema";
 import { ICourse } from "src/core/types";
 import { Roles, RolesGuard } from "../guards/roles.guard";
-
+import { UseFilter } from "../../core/filters/use-filter";
+import { BadRequestException, NotFoundException } from "../../core/exeptions";
+import { HttpExceptionFilter } from "../../core/filters/http-exception.filter";
 @Controller("/courses")
 @UseGuards(RolesGuard)
+@UseFilter(HttpExceptionFilter)
 export class CoursesController {
   constructor(private svc: CoursesService) {}
 
@@ -25,7 +28,13 @@ export class CoursesController {
 
   @Get("/:id")
   one(@Param("id") id: string) {
-    return this.svc.findOne(+id);
+    const numericId = parseInt(id, 10);
+    if (isNaN(numericId)) {
+      throw new BadRequestException(
+        "Invalid ID parameter. ID must be a number."
+      );
+    }
+    return this.svc.findOne(numericId);
   }
 
   @Post("/")
