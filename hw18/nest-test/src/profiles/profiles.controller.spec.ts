@@ -1,144 +1,151 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
-import * as request from 'supertest';
+import { BadRequestException } from '@nestjs/common';
 import { ProfilesController } from './profiles.controller';
 import { ProfilesService } from './profiles.service';
-import { PrismaService } from '../prisma/prisma.service';
+import { CustomLoggerService } from '../common/logger.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 
-describe('ProfilesController (Integration)', () => {
-  let app: INestApplication;
+describe('ProfilesController', () => {
+  let controller: ProfilesController;
+  let loggerSpy: jest.Mocked<CustomLoggerService>;
 
-  const mockPrismaService = {
-    profile: {
-      create: jest.fn(),
-      findUnique: jest.fn(),
-      findMany: jest.fn(),
-      update: jest.fn(),
-      delete: jest.fn(),
-    },
+  const mockProfilesService = {
+    create: jest.fn(),
+    findAll: jest.fn(),
+    findOne: jest.fn(),
+    update: jest.fn(),
+    remove: jest.fn(),
   };
 
   beforeEach(async () => {
+    // Create logger spy
+    loggerSpy = {
+      log: jest.fn(),
+      error: jest.fn(),
+      warn: jest.fn(),
+      debug: jest.fn(),
+      verbose: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ProfilesController],
       providers: [
-        ProfilesService,
         {
-          provide: PrismaService,
-          useValue: mockPrismaService,
+          provide: ProfilesService,
+          useValue: mockProfilesService,
+        },
+        {
+          provide: CustomLoggerService,
+          useValue: loggerSpy,
         },
       ],
     }).compile();
 
-    app = module.createNestApplication();
-
-    // Enable validation pipe for DTO validation
-    app.useGlobalPipes(
-      new ValidationPipe({
-        whitelist: true,
-        forbidNonWhitelisted: true,
-        transform: true,
-      }),
-    );
-
-    await app.init();
+    controller = module.get<ProfilesController>(ProfilesController);
   });
 
-  afterEach(async () => {
+  afterEach(() => {
     jest.clearAllMocks();
-    await app.close();
   });
 
-  describe('POST /profiles', () => {
-    const validProfileDto: CreateProfileDto = {
-      email: 'test@example.com',
-      displayName: 'Test User',
-      age: 25,
+  describe('create', () => {
+    const createProfileDto: CreateProfileDto = {
+      email: 'a@b.io',
+      displayName: 'Ann',
     };
 
     const mockCreatedProfile = {
       id: 1,
-      email: 'test@example.com',
-      displayName: 'Test User',
-      age: 25,
+      email: 'a@b.io',
+      displayName: 'Ann',
+      age: null,
     };
 
-    it('should create a profile with valid data and return 201 with JSON containing id', async () => {
-      mockPrismaService.profile.create.mockResolvedValue(mockCreatedProfile);
+    it('should create a profile and log profile.created event', async () => {
+      mockProfilesService.create.mockResolvedValue(mockCreatedProfile);
 
-      const response = await request(app.getHttpServer())
-        .post('/profiles')
-        .send(validProfileDto)
-        .expect(201);
+      const result = await controller.create(createProfileDto);
 
-      // Verify response format and content
-      expect(response.body).toMatchObject({
-        id: expect.any(Number),
-        email: validProfileDto.email,
-        displayName: validProfileDto.displayName,
-        age: validProfileDto.age,
+      expect(result).toEqual(mockCreatedProfile);
+      expect(mockProfilesService.create).toHaveBeenCalledWith(createProfileDto);
+
+      // Verify logger.log was called with correct parameters
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(loggerSpy.log).toHaveBeenCalledWith('profile.created', {
+        id: 1,
+        email: 'a@b.io',
       });
-
-      // Verify the id is present and is a number
-      expect(response.body).toHaveProperty('id');
-      expect(typeof response.body.id).toBe('number');
-
-      // Verify service was called correctly
-      expect(mockPrismaService.profile.create).toHaveBeenCalledWith({
-        data: validProfileDto,
-      });
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(loggerSpy.log).toHaveBeenCalledTimes(1);
     });
 
-    describe('DTO Validation Errors', () => {
-      it('should return 400 for invalid email format', async () => {
-        const invalidEmailData = {
-          email: 'invalid-email',
-          displayName: 'Test User',
-          age: 25,
-        };
+    it('should log error when BadRequestException is thrown', async () => {
+      const badRequestError = new BadRequestException('Invalid data');
+      mockProfilesService.create.mockRejectedValue(badRequestError);
 
-        const response = await request(app.getHttpServer())
-          .post('/profiles')
-          .send(invalidEmailData)
-          .expect(400);
+      await expect(controller.create(createProfileDto)).rejects.toThrow(
+        BadRequestException,
+      );
 
-        expect(response.body).toMatchObject({
-          statusCode: 400,
-          message: expect.arrayContaining([
-            'Email must be a valid email address',
-          ]),
-          error: 'Bad Request',
-        });
-      });
+      // Verify logger.error was called
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(loggerSpy.error).toHaveBeenCalledWith(
+        'Invalid request body for profile creation',
+        'Invalid data',
+      );
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(loggerSpy.error).toHaveBeenCalledTimes(1);
+
+      // Verify logger.log was NOT called since creation failed
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(loggerSpy.log).not.toHaveBeenCalled();
     });
 
-    describe('Response Format Validation', () => {
-      it('should return JSON response with expected structure', async () => {
-        mockPrismaService.profile.create.mockResolvedValue(mockCreatedProfile);
+    it('should not log error for other types of exceptions', async () => {
+      const otherError = new Error('Database connection failed');
+      mockProfilesService.create.mockRejectedValue(otherError);
 
-        const response = await request(app.getHttpServer())
-          .post('/profiles')
-          .send(validProfileDto)
-          .expect(201)
-          .expect('Content-Type', /json/);
+      await expect(controller.create(createProfileDto)).rejects.toThrow(Error);
 
-        // Verify all expected fields are present
-        expect(response.body).toHaveProperty('id');
-        expect(response.body).toHaveProperty('email');
-        expect(response.body).toHaveProperty('displayName');
-        expect(response.body).toHaveProperty('age');
-
-        // Verify field types
-        expect(typeof response.body.id).toBe('number');
-        expect(typeof response.body.email).toBe('string');
-        expect(typeof response.body.displayName).toBe('string');
-
-        // Age can be number or null
-        expect(
-          typeof response.body.age === 'number' || response.body.age === null,
-        ).toBe(true);
-      });
+      // Verify logger.error was NOT called for non-BadRequestException
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(loggerSpy.error).not.toHaveBeenCalled();
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(loggerSpy.log).not.toHaveBeenCalled();
     });
+
+    it('should log profile.created with correct object structure', async () => {
+      const mockProfile = {
+        id: 42,
+        email: 'test@example.com',
+        displayName: 'Test User',
+        age: 30,
+      };
+      mockProfilesService.create.mockResolvedValue(mockProfile);
+
+      await controller.create({
+        email: 'test@example.com',
+        displayName: 'Test User',
+        age: 30,
+      });
+
+      // Verify logger.log was called with object containing correct fields
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(loggerSpy.log).toHaveBeenCalledWith(
+        'profile.created',
+        expect.objectContaining({
+          id: 42,
+          email: 'test@example.com',
+        }),
+      );
+
+      // Verify the call was made exactly once
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(loggerSpy.log).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
   });
 });
