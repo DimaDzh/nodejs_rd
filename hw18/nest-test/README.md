@@ -1,24 +1,56 @@
-# Test Commands
+# NestJS Test Application
 
-## Setup (Required Before Running Tests)
+## Setup Instructions
 
-### 1. Start the Database
+### 1. Install Dependencies
+
+```bash
+pnpm install
+```
+
+### 2. Start Docker Services
 
 ```bash
 docker-compose up -d
 ```
 
-### 2. Apply Database Migrations
+### 3. Generate Environment Configuration
+
+Copy the environment example file and configure your environment variables:
 
 ```bash
-pnpm prisma migrate deploy
+cp .env.example .env
 ```
 
-### 3. Generate Prisma Client
+Edit the `.env` file if needed to match your setup:
+
+- `DATABASE_URL`: PostgreSQL connection string
+- `NODE_ENV`: Environment mode (development/production)
+- `PORT`: Application port (default: 3000)
+
+### 4. Create Prisma Migration
+
+Generate and apply database migrations:
 
 ```bash
-pnpm prisma generate
+pnpm prisma migrate dev
 ```
+
+This command will:
+
+- Generate a new migration based on your Prisma schema
+- Apply the migration to your database
+- Generate the Prisma client
+
+### 5. Run Tests
+
+Execute the test suite:
+
+```bash
+pnpm run test
+```
+
+## Test Commands
 
 ## Run All Tests
 

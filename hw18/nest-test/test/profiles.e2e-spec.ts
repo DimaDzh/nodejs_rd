@@ -23,7 +23,6 @@ describe('ProfilesController (e2e)', () => {
   });
 
   beforeEach(async () => {
-    // Clean up the database before each test
     await prisma.profile.deleteMany({});
   });
 
@@ -85,14 +84,12 @@ describe('ProfilesController (e2e)', () => {
     });
 
     it('should handle duplicate email (409)', async () => {
-      // First create a profile
       await request(app.getHttpServer())
         .post('/profiles')
         .set('authorization', 'Bearer test')
         .send({ email: 'a@b.io', displayName: 'Ann' })
         .expect(201);
 
-      // Try to create another with the same email
       const response = await request(app.getHttpServer())
         .post('/profiles')
         .set('authorization', 'Bearer test')
@@ -108,7 +105,6 @@ describe('ProfilesController (e2e)', () => {
 
   describe('GET /profiles', () => {
     it('should return all profiles', async () => {
-      // Create some test profiles first
       await prisma.profile.create({
         data: { email: 'user1@test.com', displayName: 'User 1' },
       });
