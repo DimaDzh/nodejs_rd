@@ -5,18 +5,20 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { AdminModule } from './admin/admin.module';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
     ThrottlerModule.forRoot([
       {
-        ttl: 60000, // 60 seconds
-        limit: 60, // 60 requests per minute
+        ttl: 60000,
+        limit: 60,
       },
     ]),
     UserModule,
     AuthModule,
+    AdminModule,
     PrismaModule,
   ],
   controllers: [AppController],
