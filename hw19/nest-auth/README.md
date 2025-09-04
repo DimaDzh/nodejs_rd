@@ -1,71 +1,83 @@
-## Project setup
+# NestJS Authentication App
+
+A NestJS application with JWT authentication, role-based access control, and Prisma ORM.
+
+## Quick Start
+
+### 1. Start Docker Database
 
 ```bash
-$ pnpm install
+docker-compose up -d
 ```
 
-## Compile and run the project
+### 2. Install Dependencies
 
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+pnpm install
 ```
 
-## Run tests
+### 3. Setup Prisma Database
 
 ```bash
-# unit tests
-$ pnpm run test
+# Generate Prisma client
+npx prisma generate
 
-# e2e tests
-$ pnpm run test:e2e
+# Run database migrations
+npx prisma migrate deploy
 
-# test coverage
-$ pnpm run test:cov
+# Seed database with test users
+npm run db:seed
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 4. Start the Application
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+# Development mode with hot reload
+npm run start:dev
+
+# Or production mode
+npm run start:prod
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+The app will be available at `http://localhost:3000`
 
-## Resources
+## Test API Endpoints
 
-Check out a few resources that may come in handy when working with NestJS:
+#### Login (JSON Body)
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+curl -X POST http://localhost:3000/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "test@example.com", "password": "password123"}'
+```
 
-## Support
+#### Login (Basic Auth)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+curl -X POST http://localhost:3000/auth/login \
+  -H "Authorization: Basic dGVzdEBleGFtcGxlLmNvbTpwYXNzd29yZDEyMw=="
+```
 
-## Stay in touch
+#### Access Protected Admin Endpoint
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+# First login as admin to get token
+ADMIN_TOKEN=$(curl -s -X POST http://localhost:3000/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "admin@example.com", "password": "admin123"}' | jq -r '.accessToken')
 
-## License
+# Then access admin endpoint
+curl -H "Authorization: Bearer $ADMIN_TOKEN" \
+  http://localhost:3000/admin/metrics
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## Default Users (from seed)
+
+- **Regular User**: `test@example.com` / `password123`
+- **Admin User**: `admin@example.com` / `admin123`
+
+## Database
+
+- PostgreSQL running on port `5433`
+- Database: `nestjs_db`
+- User: `demo` / Password: `demo`
