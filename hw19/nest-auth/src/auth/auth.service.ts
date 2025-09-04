@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
+import { RefreshDto } from './dto/refresh.dto';
 import {
   JwtPayload,
   TokenPair,
@@ -62,15 +63,38 @@ export class AuthService {
     return this.login({ email, password });
   }
 
+  async refresh(refreshDto: RefreshDto): Promise<TokenPair> {
+    try {
+      const payload = await this.jwtService.verifyAsync<JwtPayload>(
+        refreshDto.refreshToken,
+        {
+          secret: process.env.JWT_REFRESH_SECRET || 'refresh-secret',
+        },
+      );
+
+      // Verify that the user still exists
+      const user = await this.userService.findByEmail(payload.email);
+      if (!user) {
+        throw new UnauthorizedException('User not found');
+      }
+
+      // Generate new token pair
+      const newPayload: JwtPayload = { sub: user.id, email: user.email };
+      return this.generateTokens(newPayload);
+    } catch {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+  }
+
   private async generateTokens(payload: JwtPayload): Promise<TokenPair> {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload, {
         secret: process.env.JWT_ACCESS_SECRET || 'access-secret',
-        expiresIn: '15m', // Short-lived access token
+        expiresIn: '5m',
       }),
       this.jwtService.signAsync(payload, {
         secret: process.env.JWT_REFRESH_SECRET || 'refresh-secret',
-        expiresIn: '7d', // Long-lived refresh token
+        expiresIn: '3d',
       }),
     ]);
 
